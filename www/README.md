@@ -2,6 +2,18 @@
 
 A new Flutter project.
 
+## Installtion
+
+Stuff I needed to do so far:
+```
+  git clone git@github.com:nischnei/werwiewas.git
+  cd werwiewas/www
+  flutter pub get
+  brew install ruby
+  sudo gem install cocoapods
+  flutter run
+```
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
