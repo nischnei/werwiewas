@@ -7,7 +7,7 @@ A new Flutter project.
 Stuff I needed to do so far:
 ```
   git clone git@github.com:nischnei/werwiewas.git
-  cd werwiewas/www
+  cd werwiewas/flutter
   flutter pub get
   brew install ruby
   sudo gem install cocoapods
