@@ -1,10 +1,12 @@
+"""Server running with uvicorn."""
+
+import uvicorn
+
 from backend.backend import MLBackend
 
-app = MLBackend()
+app = MLBackend().app
 
-# Entry point to run the server
+
 def main():
-    import uvicorn
-
-    # Start the server
+    """Start and run the server."""
     uvicorn.run("backend.server:app", host="127.0.0.1", port=8000, reload=True)

@@ -1,60 +1,83 @@
-from fastapi import FastAPI, File, UploadFile
-from time import sleep
-import tempfile
+"""Backend for ML speech and text generation interaction."""
 
+import tempfile
+from contextlib import asynccontextmanager
+
+from fastapi import FastAPI, File, Form, UploadFile
+from homepageparser.beautifulsoup import BeautifulsoupParser
+from rag.llmware import LlmwareRag
 from speechrecognition.whisper import WhisperRecognition
 
-class MLBackend(FastAPI):
+
+class MLBackend:
+    """App deriving from FastAPI controlling http protocol."""
+
     def __init__(self):
+        """Define variables, initialization is done on startup."""
         super().__init__()
+        self.app = FastAPI(lifespan=self.lifespan)
         self.is_initialized = False
         self.resource_data = None
-
-        # Register routes
-        self.add_api_route("/status", self.get_status, methods=["GET"])
-        self.add_api_route("/process-audio/", self.process_audio, methods=["POST"])
-
-        # Register events
-        self.on_event("startup")(self.startup_event)
-        self.on_event("shutdown")(self.shutdown_event)
 
         # Model
         self.speech_recognition = None
 
-    async def get_status(self):
-        """
-        Endpoint to check if the server is initialized.
-        """
-        if self.is_initialized:
-            return {"status": "ready", "data": self.resource_data}
-        else:
-            return {"status": "initializing"}
+        # Rag
+        self.rag = None
 
-    async def startup_event(self):
-        """
-        Lifecycle event to handle app startup logic.
-        """
-        print("Starting initialization...")
-        # Simulate some heavy initialization
+        # Homepageparser
+        self.homepage_parser = None
+
+        # register routes
+        self.register_routes()
+
+    @asynccontextmanager
+    async def lifespan(self, _):
+        """Manage startup and teardown behavior using lifespan."""
+        # Whisper recognition for speech to text.
         self.speech_recognition = WhisperRecognition()
-        self.resource_data = "Important Resource Loaded"
+
+        # Retrieval Augmented Generator
+        self.rag = LlmwareRag()
+
+        # Initialize homepage parser
+        self.homepage_parser = BeautifulsoupParser()
+
         self.is_initialized = True
-        print("Initialization complete.")
 
-    async def shutdown_event(self):
-        """
-        Lifecycle event to handle app shutdown logic.
-        """
-        pass
+        yield
 
-    
-    async def process_audio(self, file: UploadFile = File(...)):
-        # Temporary save the audio file locally
-        with tempfile.NamedTemporaryFile() as tmp:
-            content = await file.read()
-            tmp.write(content)
-            # transcribe the audio
-            transcribed_text = self.speech_recognition.transcribe(tmp.name)
+        # Shutdown should go here, but we have nothing to shutdown currently.
 
-        # Response with dummy content for now
-        return {"message": transcribed_text}
+    def register_routes(self):
+        """Register routes with decorators."""
+
+        @self.app.get("/status")
+        async def get_status():
+            """Endpoint to check if the server is initialized."""
+            if self.is_initialized:
+                return {"status": "ready"}
+            else:
+                return {"status": "initializing"}
+
+        @self.app.post("/process-audio/")
+        async def process_audio(file: UploadFile = File(...), url: str = Form(...)):
+            """Step 1: Transcribe audio to question."""
+            with tempfile.NamedTemporaryFile() as tmp:
+                content = await file.read()
+                tmp.write(content)
+                helper_prompt = f"Tell me something about {url}."
+                question = self.speech_recognition.transcribe(path=tmp.name, initial_prompt=helper_prompt)
+            return {"question": question}
+
+        @self.app.post("/process-url/")
+        async def process_url(url: str = Form(...)):
+            """Step 2: Fetch homepage content."""
+            homepage_content = self.homepage_parser.parse(url)
+            return {"homepage": homepage_content}
+
+        @self.app.post("/process-rag/")
+        async def process_rag(homepage: str = Form(...), query: str = Form(...)):
+            """Step 3: Generate an answer using RAG."""
+            response = self.rag.query_context(context=homepage, query=query)
+            return {"answer": response.encode('utf-8')}
