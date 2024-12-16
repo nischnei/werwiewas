@@ -3,7 +3,7 @@
 import html2text
 import requests
 
-from homepageparser.parser import HomepageParser
+from homepageparser.parser_interface import HomepageParser
 
 
 class Html2TextParser(HomepageParser):

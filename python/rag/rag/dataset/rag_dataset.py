@@ -1,7 +1,7 @@
 """Class to define a RAG dataset."""
 
 from dataclasses import dataclass
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 import faiss
 import torch

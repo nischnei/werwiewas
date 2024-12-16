@@ -1,9 +1,10 @@
 """Parse homepage information with HomepageParser class."""
 
 from abc import ABC, abstractmethod
-from homepageparser.utils import sanitize_url
 
 import requests
+
+from homepageparser.utils import sanitize_url
 
 
 class HomepageParser(ABC):
