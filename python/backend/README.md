@@ -1,6 +1,6 @@
 # Python Code for Backend and ML functions
 
-## Installation
+## 🚀 Installation
 
 While you can also use pip for your dependencies, I recommend to use poetry:
 ```
@@ -26,14 +26,14 @@ poetry env use python3.11
 poetry install
 ```
 
-## Run the server
+### Run the server
 After installing, the server can be run by simply calling:
 
 ```
 poetry run server
 ```
 
-## Run integration tests
+### Run integration tests
 So far only integration tests are implemented for the backend. You can run them with:
 ```
 poetry run pytest
