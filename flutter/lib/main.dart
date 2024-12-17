@@ -4,5 +4,5 @@ import 'app.dart';
 void main() {
   // Needed for web application
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const WerWieWasApp());
+  runApp(const WhoWhatWhereApp());
 }
