@@ -7,7 +7,50 @@ Speech Driven Website Query Assistant for iOS.
 
 ## 🛠 App Architecture and Libraries
 ### App Architecture
-![App Architecture](docs/app_architecture.mmd)
+```mermaid
+---
+config:
+  theme: base
+  themeVariables:
+    primaryColor: "#f8f9fa"       # Light gray for nodes
+    primaryTextColor: "#333333"   # Dark gray text
+    primaryBorderColor: "#cccccc" # Subtle borders
+    lineColor: "#999999"          # Subtle line/edge color
+    tertiaryColor: "#e8f5e9"      # Pastel green for highlight nodes
+    secondaryColor: "#e8f5e9"     # Soft pastel blue for clusters
+    fontFamily: "Arial, sans-serif"
+    fontSize: "14px"
+---
+flowchart LR
+    %% Flutter Application
+   subgraph ZF[" "]
+      direction RL
+      A[iOS App <br>**&lt;Flutter&gt;**]
+      C[User Input Homepage <br>**&lt;Text Field&gt**] -->|URL| A
+      D[User Input Question<br>**&lt;Microphone&gt**] -->|Audio| A
+   end
+
+
+    %% HTTP as Middle Layer
+    B[HTTP]
+    A <--> B
+
+    subgraph ZB[" "]
+      direction RL
+      %% Python Backend Processes
+      E[<br><br><br><br><br><br>Backend<br>**&lt;Python FastAPI&gt;**<br><br><br><br><br><br><br>]
+      E -->|Audio| F[Audio Transcription<br>**&lt;Whisper&gt;**]
+      E -->|URL| G[Homepage Parsing<br>**&lt;BeautifulSoup&gt;**]
+      E -->|Question, Page| H[RAG Answer Generation<br>**&lt;llmware&gt;**]
+
+      %% Backend Outputs
+      F -->|Text| E
+      G -->|Page| E
+      H -->|Answer| E
+   end
+
+    B <--> E
+```
 
 The diagram illustrates the flow of data between the **www Flutter iOS App** and the **Python Backend**.
 
