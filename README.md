@@ -1,7 +1,7 @@
 # Who? What? Where?
 Speech Driven Website Query Assistant for iOS.
 
-![Example usage of WWW app.](docs/intro.png)
+![Example usage of WWW app.](docs/example_elea.gif)
 
 ---
 
