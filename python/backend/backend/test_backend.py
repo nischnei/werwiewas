@@ -12,13 +12,17 @@ Start Vision Team Contact Members Mehr
 Use tab to navigate through the menu items.
 We shape the future of healthcare
 Deeply embedded Artificial Intelligence in healthcare
-elea represents the forefront of AI technology, tailored and deeply integrated to support healthcare provider workflows and significantly enhance medical care, ensuring that clinicians remain in control with real-time data and decision support.
-With its intuitive design optimized for mobile devices, operating elea becomes an immersive experience. It facilitates the easy management and supervision of all essential aspects of clinical care from admission to diagnosis, treatment, and discharge.
+elea represents the forefront of AI technology, tailored and deeply integrated to support healthcare provider workflows 
+and significantly enhance medical care, ensuring that clinicians remain in control with real-time data and decision 
+support. With its intuitive design optimized for mobile devices, operating elea becomes an immersive experience. 
+It facilitates the easy management and supervision of all essential aspects of clinical care from admission to 
+diagnosis, treatment, and discharge.
 Our Team
 Our vision
 Saving millions of lives.
 With elea, we save lives.
-The most advanced artificial intelligence in healthcare supports the optimization of diagnostic and therapeutic treatment procedures, assists with documentation, and enables doctors to focus on what they do best: saving lives.
+The most advanced artificial intelligence in healthcare supports the optimization of diagnostic and therapeutic 
+treatment procedures, assists with documentation, and enables doctors to focus on what they do best: saving lives.
 With elea, healthcare professionals can focus on patients and ensure that they receive the best treatment.
 We shape the future of healthcare.
 Core Team
@@ -27,7 +31,8 @@ Software business leader, decade long leadership experience in high tech researc
 Dr. med. Sebastian Casu CMO
 Medical thought leader, medical director and industry influencer with decade long experience.
 Tobias Lygren Tech Lead
-Technologist, Software and AI industry leader with experience delivering innovative and high quality products as startup founder.
+Technologist, Software and AI industry leader with experience delivering innovative and high quality products as startup
+founder.
 Stephan Frank Business Lead
 Accomplished business and product leader with in-depth expertise in data protection and legal regulations.
 If you have any further questions, please do not hesitate to contact us!"""
