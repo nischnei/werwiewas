@@ -54,7 +54,7 @@ flowchart LR
 
 The diagram illustrates the flow of data between the **www Flutter iOS App** and the **Python Backend**.
 
-#### iOS Application
+#### Flutter iOS Application
 The iOS App uses the Flutter development toolkit.
 1. **User Input Homepage**:  
    - The user enters a **homepage URL** into a text field.  
@@ -69,11 +69,9 @@ The iOS App uses the Flutter development toolkit.
    - The status of the various steps is displayed.
    - The **transcribed text** of the question is displayed in a text field.
    - The **final answer** is displayed to the user. 
----
 
 #### HTTP Protocol  
 - The HTTP Protocol serves as the central layer for communication between the Flutter application and the Python backend.
----
 
 #### Python Backend
 1. **Audio Transcription**:  
@@ -82,8 +80,6 @@ The iOS App uses the Flutter development toolkit.
      - The homepage URL content is parsed using a webdriver and **BeautifulSoup**.  
 3. **RAG Answer Generation**:  
      - The transcribed question and the parsed homepage content are combined using the **llmware** Python package.
-
----
 
 ### Libraries
 
@@ -94,6 +90,8 @@ For homepage parsing I use a *selenium webdriver* which allows to render also dy
 3. **llmware**:
 For Retrieval Augmented Generation (RAG) I use **llmware** which is a framework that comes with a very lean Python interface which allows to easily query context. It basically does all the heavy lifting that otherwise would have been needed (split text into chunks &rarr; tokenize &rarr; generate embeddings &rarr; index &rarr; retrieval &rarr; generate tokens with language model &rarr; decode).
 
+---
+
 ## 🚀 Installation
 ### Python Backend
 For detailed installation instructions see the [Python Backend README](python/backend/README.md).
@@ -101,7 +99,7 @@ For detailed installation instructions see the [Python Backend README](python/ba
 ### Flutter App
 For detailed installation instructions see the [Flutter App README](flutter/README.md).
 
-## Running the server and iOS application with Simulator
+### Running the server and iOS application with Simulator
 First, start the Python backend:
 ```
 cd python/backend
@@ -117,7 +115,7 @@ flutter run
 
 Select the simulator you just started.
 
-## Open Issues
+## 🚧 Open Issues
 As always, things are never really done. For open issues and improvements see:
 https://github.com/nischnei/werwiewas/issues
 
