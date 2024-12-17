@@ -3,53 +3,11 @@ Speech Driven Website Query Assistant for iOS.
 
 ![Example usage of WWW app.](docs/intro.png)
 
-## App Architecture and Libraries
+---
+
+## 🛠 App Architecture and Libraries
 ### App Architecture
-```mermaid
----
-config:
-  look: handDrawn
-  theme: base
-  themeVariables:
-    primaryColor: "#f8f9fa"       # Light gray for nodes
-    primaryTextColor: "#333333"   # Dark gray text
-    primaryBorderColor: "#cccccc" # Subtle borders
-    lineColor: "#999999"          # Subtle line/edge color
-    tertiaryColor: "#e8f5e9"      # Pastel green for highlight nodes
-    secondaryColor: "#e8f5e9"     # Soft pastel blue for clusters
-    fontFamily: "Arial, sans-serif"
-    fontSize: "14px"
----
-flowchart LR
-    %% Flutter Application
-    subgraph ZF[" "]
-        direction LRdtz
-            A[iOS App <br>**&lt;Flutter&gt;**]
-            C[User Input Homepage <br>**&lt;Text Field&gt**] -->|URL| A
-            D[User Input Question<br>**&lt;Microphone&gt**] -->|Audio| A
-        end
-
-
-    %% HTTP as Middle Layer
-    B[HTTP]
-    A <--> B
-
-    subgraph ZB[" "]
-        direction RL
-            %% Python Backend Processes
-            E[Backend<br>**&lt;Python FastAPI&gt;**]
-            E -->|Audio| F[Audio Transcription<br>**&lt;Whisper&gt;**]
-            E -->|URL| G[Homepage Parsing<br>**&lt;BeautifulSoup&gt;**]
-            E -->|Question, Page| H[RAG Answer Generation<br>**&lt;llmware&gt;**]
-
-            %% Backend Outputs
-            F -->|Text| E
-            G -->|Page| E
-            H -->|Answer| E
-        end
-
-    B <--> E
-```
+![App Architecture](docs/app_architecture.mmd)
 
 The diagram illustrates the flow of data between the **www Flutter iOS App** and the **Python Backend**.
 
@@ -93,14 +51,14 @@ For homepage parsing I use a *selenium webdriver* which allows to render also dy
 3. **llmware**:
 For Retrieval Augmented Generation (RAG) I use **llmware** which is a framework that comes with a very lean Python interface which allows to easily query context. It basically does all the heavy lifting that otherwise would have been needed (split text into chunks &rarr; tokenize &rarr; generate embeddings &rarr; index &rarr; retrieval &rarr; generate tokens with language model &rarr; decode).
 
-## Installation
+## 🚀 Installation
 ### Python Backend
 For detailed installation instructions see the [Python Backend README](python/backend/README.md).
 
 ### Flutter App
 For detailed installation instructions see the [Flutter App README](flutter/README.md).
 
-## Running the iOS application with Simulator
+## Running the server and iOS application with Simulator
 First, start the Python backend:
 ```
 cd python/backend
@@ -108,10 +66,13 @@ poetry run server
 ```
 
 Next, start the App:
+Open a simulator, e.g. iPhone 15 with iOS 17.5.
 ```
 cd flutter
-flutter run -d ios
+flutter run
 ```
+
+Select the simulator you just started.
 
 ## Open Issues
 As always, things are never really done. For open issues and improvements see:
