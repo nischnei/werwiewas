@@ -31,17 +31,26 @@ class MLBackend:
         # register routes
         self.register_routes()
 
+    def init_speech_recognition(self):
+        """Init the speech recongition."""
+        self.speech_recognition = WhisperRecognition()
+
+    def init_homepage_parser(self):
+        """Initialize homepage parser."""
+        self.homepage_parser = BeautifulsoupParser()
+
+    def init_rag(self):
+        """Initialize Retrieval Augmented Generator."""
+        self.rag = LlmwareRag()
+
+
     @asynccontextmanager
     async def lifespan(self, _):
         """Manage startup and teardown behavior using lifespan."""
-        # Whisper recognition for speech to text.
-        self.speech_recognition = WhisperRecognition()
-
-        # Retrieval Augmented Generator
-        self.rag = LlmwareRag()
-
-        # Initialize homepage parser
-        self.homepage_parser = BeautifulsoupParser()
+        # Moving this to separate function so this can later be mocked.
+        self.init_speech_recognition()
+        self.init_homepage_parser()
+        self.init_rag()
 
         self.is_initialized = True
 
@@ -51,15 +60,6 @@ class MLBackend:
 
     def register_routes(self):
         """Register routes with decorators."""
-
-        @self.app.get("/status")
-        async def get_status():
-            """Endpoint to check if the server is initialized."""
-            if self.is_initialized:
-                return {"status": "ready"}
-            else:
-                return {"status": "initializing"}
-
         @self.app.post("/process-audio/")
         async def process_audio(file: UploadFile = File(...), url: str = Form(...)):
             """Step 1: Transcribe audio to question."""

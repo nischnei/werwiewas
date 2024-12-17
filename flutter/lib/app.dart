@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'www_main.dart';
 
-class WerWieWasApp extends StatelessWidget {
-  const WerWieWasApp({super.key});
+class WhoWhatWhereApp extends StatelessWidget {
+  const WhoWhatWhereApp({super.key});
 
   @override
   Widget build(BuildContext context) {
