@@ -1,3 +1,4 @@
+"""Speech recognition with openai's Whisper."""
 # Working around to fix a whisper Future warning
 import functools
 from pathlib import Path
