@@ -92,8 +92,11 @@ class MLBackend:
         @self.app.post("/process-url/")
         async def process_url(url: str = Form(...)):
             """Step 2: Fetch homepage content."""
-            homepage_content = self.homepage_parser.parse(url)
-            return {"homepage": homepage_content}
+            try:
+                homepage_content = self.homepage_parser.parse(url)
+                return {"homepage": homepage_content}
+            except Exception:
+                return {"homepage": ""}
 
         @self.app.post("/process-rag/")
         async def process_rag(homepage: str = Form(...), query: str = Form(...)):

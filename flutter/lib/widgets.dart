@@ -31,24 +31,36 @@ Widget buildAudioWaveform(BuildContext context, RecorderController controller) {
   );
 }
 
-Widget _buildProcessingIndicator(bool status) {
-  return status
-      ? SizedBox(
-          width: 24,
-          height: 24,
-          child: CircularProgressIndicator(
-            strokeWidth: 2.0,
-          ),
-        )
-      : Icon(
-          Icons.check_circle,
-          color: Colors.green,
-        );
+Widget _buildProcessingIndicator(String status) {
+  if (status == "failed") {
+    return Icon(
+      Icons.error,
+      color: Colors.red,
+    );
+  } else if (status == "successful") {
+    return Icon(
+      Icons.check_circle,
+      color: Colors.green,
+    );
+  } else if (status == "processing") {
+    return SizedBox(
+      width: 24,
+      height: 24,
+      child: CircularProgressIndicator(
+        strokeWidth: 2.0,
+      ),
+    );
+  } else {
+    return Icon(
+      Icons.question_mark,
+      color: Colors.blue,
+    );
+  }
 }
 
-Widget buildStatus(
-    BuildContext context, bool processing1, bool processing2, bool processing3) {
-  if (processing1 == false && processing2 == false && processing3 == false) {
+Widget buildStatus(BuildContext context, String processing1, String processing2,
+    String processing3) {
+  if (processing1 == "init" && processing2 == "init" && processing3 == "init") {
     return SizedBox(
       height: 24,
     );
