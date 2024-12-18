@@ -19,9 +19,9 @@ class WWWMain extends StatefulWidget {
 class _WWWMainState extends State<WWWMain> {
   String _queryPage = "";
   bool _isRecording = false;
-  bool _processingSpeech = false;
-  bool _processingPage = false;
-  bool _processingAnswer = false;
+  String _processingSpeech = "init";
+  String _processingPage = "init";
+  String _processingAnswer = "init";
   String _backendPageContent = "";
   String _backendQuestion = "";
   String _backendAnswer = "";
@@ -47,25 +47,25 @@ class _WWWMainState extends State<WWWMain> {
     if (_isRecording) {
       setState(() {
         _isRecording = false;
-        _processingSpeech = true;
-        _processingPage = true;
-        _processingAnswer = true;
+        _processingSpeech = "processing";
+        _processingPage = "processing";
+        _processingAnswer = "processing";
       });
 
-      Future<String> page = parsePage(_queryPage);
-      Future<String> question = stopAndUpload(_recorderController, _queryPage);
+      Future<Map<String, String>> page = parsePage(_queryPage);
+      Future<Map<String, String>> question = stopAndUpload(_recorderController, _queryPage);
 
       page.then((result) {
         setState(() {
-          _backendPageContent = result;
-          _processingPage = false;
+          _backendPageContent = result["homepage"] ?? "";
+          _processingPage = result["status"] ?? "failed";
         });
       });
 
       question.then((result) {
         setState(() {
-          _backendQuestion = result;
-          _processingSpeech = false;
+          _backendQuestion = result["question"] ?? "";
+          _processingSpeech = result["status"] ?? "failed";
         });
       });
 
@@ -73,8 +73,8 @@ class _WWWMainState extends State<WWWMain> {
       final answer =
           await generateAnswer(_backendPageContent, _backendQuestion);
       setState(() {
-        _processingAnswer = false;
-        _backendAnswer = answer;
+        _processingAnswer = answer["status"] ?? "failed";
+        _backendAnswer = answer["answer"] ?? "";
       });
     } else {
       await _recorderController.record();

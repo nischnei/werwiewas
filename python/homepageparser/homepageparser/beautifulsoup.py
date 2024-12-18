@@ -31,20 +31,16 @@ class BeautifulsoupParser(HomepageParser):
 
     def parse(self, url: str):
         """Parse the page using a webdriver and bs4."""
-        try:
-            # Load the webpage
-            self.driver.get(sanitize_url(url))
+        # Load the webpage
+        self.driver.get(sanitize_url(url))
 
-            # Wait for the page to load (you can adjust time or use WebDriverWait for specific elements)
-            self.driver.implicitly_wait(10)
+        # Wait for the page to load (you can adjust time or use WebDriverWait for specific elements)
+        self.driver.implicitly_wait(10)
 
-            # Get the rendered HTML
-            rendered_html = self.driver.page_source
+        # Get the rendered HTML
+        rendered_html = self.driver.page_source
 
-            return self.parse_response(rendered_html)
-
-        except Exception as e:
-            return f"Error processing the webpage: {e}"
+        return self.parse_response(rendered_html)
 
     def parse_response(self, response: str):
         """Not used."""

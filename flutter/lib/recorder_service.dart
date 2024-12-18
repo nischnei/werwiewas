@@ -3,10 +3,15 @@ import 'package:universal_io/io.dart';
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:http/http.dart' as http;
 
-Future<String> stopAndUpload(
+Future<Map<String, String>> stopAndUpload(
     RecorderController recorderController, String queryPage) async {
   final path = await recorderController.stop();
-  if (path == null) return "";
+  if (path == null) {
+    return {
+      "answer": "Recorder didn't return a valid file.",
+      "status": "failed",
+    };
+  }
 
   try {
     final file = File(path);
@@ -19,12 +24,23 @@ Future<String> stopAndUpload(
     final res = await http.Response.fromStream(response);
 
     if (response.statusCode == 200) {
-      final String responseBody = utf8.decode(res.bodyBytes); // Proper UTF-8 decoding
+      final String responseBody =
+          utf8.decode(res.bodyBytes); // Proper UTF-8 decoding
       final data = json.decode(responseBody);
-      return data['question'] ?? '';
+      final String question = data['question'] ?? '';
+      return {
+        "question": question,
+        "status": question != "" ? "successful" : "failed",
+      };
     }
-    return "Error: ${response.statusCode}";
+    return {
+      "question": "Error: ${response.statusCode}",
+      "status": "failed",
+    };
   } catch (e) {
-    return "Upload failed: $e";
+    return {
+      "question": "RAG failed: $e",
+      "status": "failed",
+    };
   }
 }
